@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block body %}
+<script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
+<script>
+  tinymce.init({
+  selector: 'textarea',
+  height: 500,
+  plugins: [
+    'advlist autolink lists link image charmap print preview anchor',
+    'searchreplace visualblocks code fullscreen',
+    'insertdatetime media table contextmenu paste code'
+  ],
+  toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+  content_css: [
+    '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
+    '//www.tinymce.com/css/codepen.min.css'
+  ]
+});
+
+function test() {
+    console.log("malele")
+}
+</script>
+  {% if session.username %}
+    <form action="{{ url_for('create_blog') }}" method="post" class="add-entry">
+      <dl>
+        <dt>标题:
+        <dd><input type="text" size="30" name="title">
+        <dt>内容:
+        <textarea name="content">
+          <h1 style="text-align: center;">Welcome to use TinyMCE editor!</h1>
+        </textarea>
+        <dd><input type="submit" value="添加"><input id="test" type="submit" value="test" onclick="test()">
+      </dl>
+    </form>
+  {% endif %}
+  <ul class="entries">
+  {% for entry in entries %}
+    <li style="border-bottom: solid 2px deepskyblue">
+    <form action="{{ url_for('update_blog', blog_id=entry.id) }}" method="post">
+        <input type="submit" name="action" value="Delete" style="float: right">
+        <input type="submit" name="action" value="Update" style="float: right">
+        <h2>{{ entry.title }}</h2>{{ entry.content|safe }}
+        <h6>{{ entry.time }}</h6>
+        <input type="submit" name="action" value="Comment" style="float: right">
+    </form>
+    </li>
+  {% else %}
+    <li><em>这个人很懒，什么都没有写～</em></li>
+  {% endfor %}
+  </ul>
+{% endblock %}

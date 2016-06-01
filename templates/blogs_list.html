@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block body %}
+  <ul class="entries">
+  {% for entry in entries %}
+    <li style="border-bottom: solid 2px deepskyblue">
+    <form action="{{ url_for('update_blog', blog_id=entry.id) }}" method="post">
+        <div style="display: inline-block">
+            <img src={{ entry.email }}><br>
+            <a style="font-size: 10px; display: block; text-align: center">用户昵称: {{ entry.username }}</a>
+        </div>
+        <div style="display: inline-block">
+            <input type="submit" name="action" value="Comment" style="float: right">
+            <a style="font-size: medium">{{ entry.title }}</a>{{ entry.content|safe }}<br>
+            <a>{{ entry.time }}</a>
+        </div>
+    </form>
+    </li>
+  {% else %}
+    <li><em>这个人很懒，什么都没有写～</em></li>
+  {% endfor %}
+  </ul>
+{% endblock %}

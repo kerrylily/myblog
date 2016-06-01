@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+{% block body %}
+    <h2>修改博客</h2>
+    <form action="{{ url_for('commit', blog_id=blog.id) }}" method="post">
+        <dl>
+        <dt>标 题:
+        <dd><input type="text" size="30" name="title" value={{ blog.title }}>
+        <dt>内 容:
+        <dd><textarea name="content" rows="5" cols="40">{{ blog.content }}</textarea>
+        <dd><input type="submit" value="确认修改">
+        </dl>
+    </form>
+{% endblock %}
