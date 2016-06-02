@@ -1,36 +1,17 @@
 {% extends "layout.html" %}
 {% block body %}
-<script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
-<script>
-  tinymce.init({
-  selector: 'textarea',
-  height: 500,
-  plugins: [
-    'advlist autolink lists link image charmap print preview anchor',
-    'searchreplace visualblocks code fullscreen',
-    'insertdatetime media table contextmenu paste code'
-  ],
-  toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-  content_css: [
-    '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
-    '//www.tinymce.com/css/codepen.min.css'
-  ]
-});
-
-function test() {
-    console.log("malele")
-}
-</script>
   {% if session.username %}
     <form action="{{ url_for('create_blog') }}" method="post" class="add-entry">
       <dl>
         <dt>标题:
         <dd><input type="text" size="30" name="title">
         <dt>内容:
-        <textarea name="content">
-          <h1 style="text-align: center;">Welcome to use TinyMCE editor!</h1>
+          <dd><textarea id="content" name="content">
         </textarea>
-        <dd><input type="submit" value="添加"><input id="test" type="submit" value="test" onclick="test()">
+          <script type="text/javascript">
+              CKEDITOR.replace("content");
+          </script>
+        <dd><input type="submit" value="添加">
       </dl>
     </form>
   {% endif %}
