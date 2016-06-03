@@ -1,7 +1,13 @@
+#!/usr/bin/python
+# -*- coding: utf8 -*-
+
+import os
+import random, datetime
+
 from hashlib import md5
 import MySQLdb.cursors
 
-from flask import Flask, request, session, redirect, url_for, render_template, flash, abort
+from flask import Flask, request, session, redirect, url_for, render_template, make_response
 
 app = Flask(__name__)
 
@@ -81,6 +87,48 @@ def create_blog():
         print e.message
 
     return redirect(url_for('blog_index'))
+
+
+@app.route('/ckupload/', methods=['POST', 'OPTIONS'])
+def ckupload():
+    """CKEditor file upload"""
+    error = ''
+    url = ''
+    callback = request.args.get("CKEditorFuncNum")
+
+    def gen_rnd_filename():
+        filename_prefix = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+        return '%s%s' % (filename_prefix, str(random.randrange(1000, 10000)))
+
+    if request.method == 'POST' and 'upload' in request.files:
+        fileobj = request.files['upload']
+        fname, fext = os.path.splitext(fileobj.filename)
+        rnd_name = '%s%s' % (gen_rnd_filename(), fext)
+
+        filepath = os.path.join(app.static_folder, 'upload', rnd_name)
+
+        dirname = os.path.dirname(filepath)
+        if not os.path.exists(dirname):
+            try:
+                os.makedirs(dirname)
+            except:
+                error = 'ERROR_CREATE_DIR'
+        elif not os.access(dirname, os.W_OK):
+            error = 'ERROR_DIR_NOT_WRITEABLE'
+
+        if not error:
+            fileobj.save(filepath)
+            url = url_for('static', filename='%s/%s' % ('upload', rnd_name))
+    else:
+        error = 'post error'
+
+    res = """<script type="text/javascript">
+  window.parent.CKEDITOR.tools.callFunction(%s, '%s', '%s');
+</script>""" % (callback, url, error)
+
+    response = make_response(res)
+    response.headers["Content-Type"] = "text/html"
+    return response
 
 
 @app.route('/update_blog/<int:blog_id>', methods=['POST', 'GET'])

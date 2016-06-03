@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block body %}
+{% block content %}
   {% if session.username %}
     <form action="{{ url_for('create_blog') }}" method="post" class="add-entry">
       <dl>
@@ -9,7 +9,9 @@
           <dd><textarea id="content" name="content">
         </textarea>
           <script type="text/javascript">
-              CKEDITOR.replace("content");
+              CKEDITOR.replace("content", {
+                  filebrowserUploadUrl: '/ckupload/'
+              });
           </script>
         <dd><input type="submit" value="添加">
       </dl>
@@ -23,7 +25,6 @@
         <input type="submit" name="action" value="Update" style="float: right">
         <h2>{{ entry.title }}</h2>{{ entry.content|safe }}
         <h6>{{ entry.time }}</h6>
-        <input type="submit" name="action" value="Comment" style="float: right">
     </form>
     </li>
   {% else %}

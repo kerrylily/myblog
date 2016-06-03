@@ -1,17 +1,74 @@
 <!doctype html>
-<title>博客屋</title>
 <head>
-    <script type="text/javascript" src="{{ url_for('static', filename='ckeditor/ckeditor.js') }}"></script>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+<title>Blog</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"/>
 </head>
-<div class="page">
-  <h1>Blog</h1>
-  <div class="metanav">
-  {% if not session.username %}
-    <a href="{{ url_for('login') }}">登陆</a>
-  {% else %}
-    <a href="{{ url_for('logout') }}">注销</a>
-  {% endif %}
-  </div>
-  {% block body %}{% endblock %}
-</div>
+
+<body>
+	<div id="header">
+		<span class="logo">blog about web design</span>																																																											<div style="position:absolute;top:1px;left:1px;height:0px;width:0px;overflow:hidden"><h1><a href="">best free templates</a></h1></div>
+		<ul id="menu">
+			<li><a href=""><img src="{{ url_for('static', filename='images/but1.gif') }}" alt="" width="64" height="42" /></a></li>
+			<li><a href=""><img src="{{ url_for('static', filename='images/but2.gif') }}" alt="" width="108" height="42" /></a></li>
+			<li><a href=""><img src="{{ url_for('static', filename='images/but3.gif') }}" alt="" width="93" height="42" /></a></li>
+			<li><a href=""><img src="{{ url_for('static', filename='images/but4.gif') }}" alt="" width="101" height="42" /></a></li>
+			<li><a href=""><img src="{{ url_for('static', filename='images/but5.gif') }}" alt="" width="86" height="42" /></a></li>
+			<li><a href=""><img src="{{ url_for('static', filename='images/but6.gif') }}" alt="" width="102" height="42" /></a></li>
+		</ul>
+		<img src="{{ url_for('static', filename='images/spacer.gif') }}" alt="setalpm" width="120" height="120" border="0" usemap="#Map" class="rss" />
+        <map name="Map">
+          <area shape="circle" coords="60,60,63" href="">
+      </map>
+	</div>
+	<div id="content">
+        <div id="posts">
+		    {% block content %}
+            {% endblock %}
+        </div>
+        <div id="sidebar">
+		    <div id="search">
+				<input type="text" value="Search"> <a href=""><img src="{{ url_for('static', filename='images/go.gif') }}" alt="" width="26" height="26" /></a>
+			</div>
+			<div class="list">
+				<img src="{{ url_for('static', filename='images/title1.gif') }}" alt="" width="186" height="36" />
+				<ul>
+					<li><a href="">animation</a></li>
+					<li><a href="">magazines</a></li>
+					<li><a href="">architecture</a></li>
+					<li><a href="">news</a></li>
+					<li><a href="">art</a></li>
+					<li><a href="">photography</a></li>
+					<li><a href="">blogs</a></li>
+					<li><a href="">product design</a></li>
+					<li><a href="">books</a></li>
+					<li><a href="">stuff</a></li>
+					<li><a href="">graphic design</a></li>
+					<li><a href="">web design</a></li>
+					<li><a href="">illustration</a></li>
+				</ul>
+				<img src="{{ url_for('static', filename='images/title2.gif') }}" alt="" width="180" height="34" />
+				<ul>
+					<li><a href="">January</a></li>
+					<li><a href="">July</a></li>
+					<li><a href="">February</a></li>
+					<li><a href="">August</a></li>
+					<li><a href="">March</a></li>
+					<li><a href="">September</a></li>
+					<li><a href="">April</a></li>
+					<li><a href="">October</a></li>
+					<li><a href="">May</a></li>
+					<li><a href="">November</a></li>
+					<li><a href="">June</a></li>
+					<li><a href="">December</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div id="footer">
+		<p>Copyright &copy;. All rights reserved. Design from <a href="" target="_blank" title="Free Templates"></a></p>
+	</div>
+    <div style="display:none">
+        <script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script>
+    </div>
+</body>
