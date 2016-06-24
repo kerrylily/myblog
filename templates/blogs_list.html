@@ -5,7 +5,7 @@
     <form action="{{ url_for('update_blog', blog_id=entry.id) }}" method="post">
         <div class="post">
 				<h2>{{ entry.title }}</h2>
-				<div><span class="date">{{ entry.time }}</span><span class="categories">作者：{{ entry.username }}</span></div>
+				<div><span class="date">{{ entry.username }}</span><span class="categories">{{ entry.time }}</span></div>
 				<div class="description" style="width: 100%;">
 					<p><img src={{ entry.email }} alt="" width="100" height="100" />
                     {{ entry.content }}</p>
